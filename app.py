@@ -1,10 +1,12 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import re
 import os
 import fitz
 import json
 
 app = Flask(__name__)
+CORS(app)
 
 # Regex patterns
 pattern1 = r'(?P<ID>\d+)\s+(?P<COD>\d+)(?P<DESCRIPTION>[^\d].*?)\s+(?P<QTD>\d+,\d+)(?P<UN>[A-Z]+)\s+(?P<VL_UN>\d+,\d+)\s+\((?P<VL_TR>[\d,-]+)\)\s+(?P<VL_ITEM>\d+,\d+)'
@@ -108,6 +110,6 @@ def upload_pdf():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-if __name__ == '__main__':
+if __name__ == '__main__':    
     port = int(os.environ.get('PORT', 5000))  # Usa a porta fornecida ou 5000 como padrão
     app.run(host='0.0.0.0', port=port)
